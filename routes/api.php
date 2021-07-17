@@ -25,5 +25,6 @@ Route::get('login', [UserController::class, 'loginPage'])->name('login');
 
 
 Route::group(['middleware' => 'auth:user'], function(){
-Route::get('user', [UserController::class, 'detailUser'])->middleware('scope:admin');
+  Route::post('logout', [UserController::class, 'logout'])->name('logout');
+  Route::get('user', [UserController::class, 'detailUser'])->middleware('scope:admin');
 });

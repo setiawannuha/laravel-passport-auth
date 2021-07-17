@@ -40,6 +40,12 @@ class UserController extends Controller
         return response()->json(['error'=>'Unauthorised'], 401);
       }
     }
+    public function logout(Request $request)
+    {
+      $user = Auth::user()->token();
+      $user->revoke();
+      return "Logout";
+    }
     
     public function loginPage(){
       return "You must Login";
