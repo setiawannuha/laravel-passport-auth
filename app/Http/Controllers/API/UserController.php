@@ -55,4 +55,10 @@ class UserController extends Controller
       var_dump("User");
       return response()->json(['success' => $user], 200);
     }
+
+    public function detailAdmin(Request $request){
+      $user = Auth::user();
+      var_dump("Admin");
+      return response()->json(['success' => $user], 200);
+    }
 }
