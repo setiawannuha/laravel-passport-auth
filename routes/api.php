@@ -3,7 +3,6 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\API\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,16 +15,5 @@ use App\Http\Controllers\API\AdminController;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
 Route::post('login', [UserController::class, 'login']);
 Route::post('register', [UserController::class, 'register']);
-Route::get('login', [UserController::class, 'loginPage'])->name('login');
-
-
-Route::group(['middleware' => 'auth:user'], function(){
-  Route::post('logout', [UserController::class, 'logout'])->name('logout');
-  Route::get('user', [UserController::class, 'detailUser'])->middleware('scope:user');
-  Route::get('admin', [UserController::class, 'detailAdmin'])->middleware('scope:admin');
-});

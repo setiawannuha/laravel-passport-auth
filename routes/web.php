@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/login', [UserController::class, 'login'])->name('login');
+Route::get('/register', [UserController::class, 'register'])->name('register');
+
+Route::group(['middleware' => 'auth:user'], function(){
+  Route::post('logout', [UserController::class, 'logout'])->name('logout');
+  Route::get('user', [UserController::class, 'user'])->middleware('scope:user');
+  Route::get('admin', [UserController::class, 'admin'])->middleware('scope:admin');
 });

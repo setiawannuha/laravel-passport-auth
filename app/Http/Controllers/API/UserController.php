@@ -16,7 +16,7 @@ class UserController extends Controller
       $input['password'] = bcrypt($input['password']);
       $user = User::create($input);
       $scope = $request->level == "1" ? ["admin"] : ["user"];
-      $success['token'] =  $user->createToken('HelloWorld', $scope)->accessToken;
+      $success['token'] =  $user->createToken('TokenSecret123OKE', $scope)->accessToken;
       $success['name'] =  $user->name;
 
       return response()->json(['success'=>$success], 200);
@@ -33,32 +33,11 @@ class UserController extends Controller
       ){
         $user = Auth::user();
         $scope = $request->level == "1" ? ["admin"] : ["user"];
-        $success['token'] =  $user->createToken('HelloWorld', $scope)->accessToken;
+        $success['token'] =  $user->createToken('TokenSecret123OKE', $scope)->accessToken;
         return response()->json(['success' => $success], 200);
       } 
       else{
-        return response()->json(['error'=>'Unauthorised'], 401);
+        return response()->json(['error'=>'Unauthorized'], 401);
       }
-    }
-    public function logout(Request $request)
-    {
-      $user = Auth::user()->token();
-      $user->revoke();
-      return "Logout";
-    }
-    
-    public function loginPage(){
-      return "You must Login";
-    }
-    public function detailUser(Request $request){
-      $user = Auth::user();
-      var_dump("User");
-      return response()->json(['success' => $user], 200);
-    }
-
-    public function detailAdmin(Request $request){
-      $user = Auth::user();
-      var_dump("Admin");
-      return response()->json(['success' => $user], 200);
     }
 }
